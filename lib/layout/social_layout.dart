@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_app/shared/componants/componants.dart';
 import 'package:social_app/shared/cubit/cubit.dart';
 import 'package:social_app/shared/cubit/states.dart';
+import 'package:social_app/shared/styles/icon_broken.dart';
 
 class SocialLayout extends StatelessWidget {
 
@@ -14,23 +15,47 @@ class SocialLayout extends StatelessWidget {
       listener: (context,state) {},
       builder: (context,state)
       {
+        var cubit = AppCubit.get(context);
         return Scaffold(
           appBar: AppBar(
             title: Text(
-              'Posts',
+              cubit.titles[cubit.currentIndex],
             ),
           ),
-          body: ConditionalBuilder(
-            condition: AppCubit.get(context).model != null,
-            builder: (context)
+          body: cubit.screens[cubit.currentIndex],
+          bottomNavigationBar: BottomNavigationBar(
+            currentIndex: cubit.currentIndex,
+            onTap: (index)
             {
-              return Column(
-                children: [
-
-                ],
-              );
+              cubit.changeBottomNav(index);
             },
-            fallback: (context)=> const Center(child: CircularProgressIndicator()),
+            items: const
+            [
+              BottomNavigationBarItem(
+                icon: Icon(
+                  IconBroken.Home,
+                ),
+                label: 'Home',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  IconBroken.Chat,
+                ),
+                label: 'Chats',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  IconBroken.Location,
+                ),
+                label: 'Users',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  IconBroken.Setting,
+                ),
+                label: 'Settings',
+              ),
+            ],
           ),
         );
       },

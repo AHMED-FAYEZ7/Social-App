@@ -17,6 +17,7 @@ ThemeData lightTheme = ThemeData(
       backgroundColor: Colors.white,
       elevation: 0.0,
       titleTextStyle: TextStyle(
+        fontFamily: 'jannah',
         color: Colors.black,
         fontSize: 20,
         fontWeight: FontWeight.bold,
