@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "534718811159",
+    "project_id": "mini-social-app-41782",
+    "storage_bucket": "mini-social-app-41782.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:534718811159:android:a51457d15afcad5c5c2052",
+        "android_client_info": {
+          "package_name": "com.example.social_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "534718811159-jseffgs7m76ge4b9tnun513eln993sll.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.social_app",
+            "certificate_hash": "d3551f4c7dbbdaf031cca384e87a7172fd31a969"
+          }
+        },
+        {
+          "client_id": "534718811159-0239f66u7ttdbu58cp4dpgol5jh3ec61.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdmIsNCTc0-bdGtaSd5ZfUYdvHI7IyIGg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "534718811159-0239f66u7ttdbu58cp4dpgol5jh3ec61.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
