@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_app/models/user_model.dart';
 import 'package:social_app/modules/chats/chats_screen.dart';
 import 'package:social_app/modules/feeds/feeds_screen.dart';
+import 'package:social_app/modules/new_post/new_post_screen.dart';
 import 'package:social_app/modules/settings/settings_screen.dart';
 import 'package:social_app/modules/users/users_screen.dart';
 import 'package:social_app/shared/componants/constants.dart';
@@ -15,7 +16,7 @@ class AppCubit extends Cubit<AppStates>
   AppCubit() :super(AppInitialState());
   static AppCubit get(context) => BlocProvider.of(context);
 
-  UserModel? model;
+  UserModel? userModel;
   void getUserData()
   {
     emit(AppGetUserLoadingState());
@@ -25,7 +26,7 @@ class AppCubit extends Cubit<AppStates>
         .doc(uId)
         .get()
         .then((value){
-          model = UserModel.fromJson(value.data());
+          userModel = UserModel.fromJson(value.data());
           emit(AppGetUserSuccessState());
     })
         .catchError((error){
@@ -39,6 +40,7 @@ class AppCubit extends Cubit<AppStates>
   List<Widget> screens = [
     const FeedsScreen(),
     const ChatsScreen(),
+    const NewPostScreen(),
     const UsersScreen(),
     const SettingsScreen(),
   ];
@@ -46,14 +48,22 @@ class AppCubit extends Cubit<AppStates>
   List<String> titles = [
     'Home',
     'Chats',
+    'POSTS',
     'Users',
     'Settings',
   ];
 
   void changeBottomNav(int index)
   {
-    currentIndex = index;
-    emit(AppChangeBottomNavState());
+    if(index == 2 )
+    {
+      emit(AppAddPostState());
+    } else
+    {
+      currentIndex = index;
+      emit(AppChangeBottomNavState());
+    }
+
   }
 
 

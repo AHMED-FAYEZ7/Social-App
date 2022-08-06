@@ -12,3 +12,5 @@ class AppGetUserErrorState extends AppStates
 }
 
 class AppChangeBottomNavState extends AppStates {}
+
+class AppAddPostState extends AppStates {}

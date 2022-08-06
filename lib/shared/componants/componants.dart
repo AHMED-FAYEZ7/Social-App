@@ -65,7 +65,7 @@ Widget defaultButton({
   required String text,
 }) => Container(
   width: width,
-  height: 50,
+  height: 40,
   decoration: BoxDecoration(
     borderRadius: BorderRadius.circular(
       radius,
@@ -80,7 +80,7 @@ Widget defaultButton({
       isUpperCase? text.toUpperCase() : text,
       style: const TextStyle(
         color: Colors.white,
-        fontSize: 20,
+        fontSize: 16,
       ),
     ),
 

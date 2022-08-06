@@ -52,6 +52,9 @@ class RegisterCubit extends Cubit<RegisterStates>
       name: name,
       email: email,
       phone: phone,
+      cover: 'https://images4.alphacoders.com/665/665374.jpg',
+      bio: 'write your bio ...',
+      image: 'https://images.wallpapersden.com/image/download/last-death-wish-anime_a2poZmmUmZqaraWkpJRmbmdlrWZlbWU.jpg',
       isEmailVerified: false,
     );
 

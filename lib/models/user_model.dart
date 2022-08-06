@@ -2,6 +2,9 @@ class UserModel {
   String? name;
   String? email;
   String? phone;
+  String? image;
+  String? cover;
+  String? bio;
   bool? isEmailVerified;
   late String uId;
 
@@ -9,6 +12,9 @@ class UserModel {
     this.name,
     this.email,
     this.phone,
+    this.cover,
+    this.image,
+    this.bio,
     this.isEmailVerified,
     required this.uId,
   });
@@ -18,6 +24,9 @@ class UserModel {
     name = json!['name'];
     email = json['email'];
     phone = json['phone'];
+    image = json['image'];
+    cover = json['cover'];
+    bio = json['bio'];
     isEmailVerified = json['isEmailVerified'];
     uId = json['uId'];
   }
@@ -27,7 +36,10 @@ class UserModel {
     return {
       'name':name,
       'email':email,
+      'bio':bio,
       'phone':phone,
+      'cover':cover,
+      'image':image,
       'isEmailVerified':isEmailVerified,
       'uId':uId,
     };
