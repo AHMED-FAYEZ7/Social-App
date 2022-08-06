@@ -21,6 +21,11 @@ class AppProfileImageErrorState extends AppStates {}
 class AppCoverImageSuccessState extends AppStates {}
 class AppCoverImageErrorState extends AppStates {}
 
+class AppPostImageSuccessState extends AppStates {}
+class AppPostImageErrorState extends AppStates {}
+class AppRemovePostImageState extends AppStates {}
+
+
 class AppUploadProfileImageSuccessState extends AppStates {}
 class AppUploadProfileImageErrorState extends AppStates {}
 
@@ -29,3 +34,7 @@ class AppUploadCoverImageErrorState extends AppStates {}
 
 class AppUserUpdateLoadingState extends AppStates {}
 class AppUserUpdateErrorState extends AppStates {}
+
+class AppCreatePostLoadingState extends AppStates {}
+class AppCreatePostSuccessState extends AppStates {}
+class AppCreatePostErrorState extends AppStates {}
