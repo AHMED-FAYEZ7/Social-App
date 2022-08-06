@@ -19,7 +19,7 @@ void main()
     await Firebase.initializeApp();
     await CacheHelper.init();
     Widget? widget;
-    uId = CacheHelper.getData(key: 'uId');
+
 
     if(uId != null)
       {

@@ -5,6 +5,7 @@ import 'package:social_app/layout/social_layout.dart';
 import 'package:social_app/modules/register/cubit/register_cubit.dart';
 import 'package:social_app/modules/register/cubit/register_states.dart';
 import 'package:social_app/shared/componants/componants.dart';
+import 'package:social_app/shared/cubit/cubit.dart';
 
 class RegisterScreen extends StatelessWidget {
 
@@ -24,6 +25,7 @@ class RegisterScreen extends StatelessWidget {
           if(state is RegisterCreateUserSuccessState)
           {
             navigateAndFinish(context, SocialLayout());
+            AppCubit.get(context).getUserData();
           }
         },
         builder: (context , state)

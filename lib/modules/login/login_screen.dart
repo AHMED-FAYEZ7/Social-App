@@ -6,6 +6,8 @@ import 'package:social_app/modules/login/cubit/login_cubit.dart';
 import 'package:social_app/modules/login/cubit/login_states.dart';
 import 'package:social_app/modules/register/register_screen.dart';
 import 'package:social_app/shared/componants/componants.dart';
+import 'package:social_app/shared/componants/constants.dart';
+import 'package:social_app/shared/cubit/cubit.dart';
 import 'package:social_app/shared/network/local/cache_helper.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -34,8 +36,11 @@ class LoginScreen extends StatelessWidget {
               key: 'uId',
               value: state.uId,
             ).then((value) {
-              navigateAndFinish(context, SocialLayout(),);
+              uId = state.uId;
+              navigateAndFinish(context, const SocialLayout(),);
+              AppCubit.get(context).getUserData();
             });
+
           }
         },
         builder: (context,state)

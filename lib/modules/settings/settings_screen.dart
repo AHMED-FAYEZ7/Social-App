@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:social_app/modules/edit_profile/edit_profile_screen.dart';
 import 'package:social_app/shared/componants/componants.dart';
 import 'package:social_app/shared/cubit/cubit.dart';
 import 'package:social_app/shared/cubit/states.dart';
 import 'package:social_app/shared/styles/icon_broken.dart';
 
 class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class SettingsScreen extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                height: 195,
+                height: 210,
                 child: Stack(
                   alignment: AlignmentDirectional.bottomCenter,
                   children: [
@@ -145,15 +145,18 @@ class SettingsScreen extends StatelessWidget {
                   Expanded(
                     child:  OutlinedButton(
                       onPressed: (){},
-                      child: Text(
+                      child: const Text(
                         'Add Photos',
                       ),
                     ),
                   ),
-                  SizedBox(width: 10,),
+                  const SizedBox(width: 10,),
                   OutlinedButton(
-                    onPressed: (){},
-                    child: Icon(
+                    onPressed: ()
+                    {
+                      navigateTo(context, EditProfileScreen());
+                    },
+                    child: const Icon(
                       IconBroken.Edit,
                       size: 20,
                     ),
