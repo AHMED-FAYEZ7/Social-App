@@ -38,7 +38,7 @@ class LoginScreen extends StatelessWidget {
             ).then((value) {
               uId = state.uId;
               navigateAndFinish(context, const SocialLayout(),);
-              AppCubit.get(context).getUserData();
+              AppCubit.get(context)..getUserData()..getPosts()..getAllUsers();
             });
 
           }

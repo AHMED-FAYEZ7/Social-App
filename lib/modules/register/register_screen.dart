@@ -5,7 +5,9 @@ import 'package:social_app/layout/social_layout.dart';
 import 'package:social_app/modules/register/cubit/register_cubit.dart';
 import 'package:social_app/modules/register/cubit/register_states.dart';
 import 'package:social_app/shared/componants/componants.dart';
+import 'package:social_app/shared/componants/constants.dart';
 import 'package:social_app/shared/cubit/cubit.dart';
+import 'package:social_app/shared/network/local/cache_helper.dart';
 
 class RegisterScreen extends StatelessWidget {
 
@@ -22,10 +24,23 @@ class RegisterScreen extends StatelessWidget {
       child: BlocConsumer<RegisterCubit, RegisterStates>(
         listener: (context , state)
         {
-          if(state is RegisterCreateUserSuccessState)
+          if(state is RegisterErrorState)
           {
-            navigateAndFinish(context, SocialLayout());
-            AppCubit.get(context).getUserData();
+            showToast(
+              text: state.error,
+              state: ToastStates.ERROR,
+            );
+          }
+          if(state is RegisterSuccessState)
+          {
+            CacheHelper.saveData(
+              key: 'uId',
+              value: state.uId,
+            ).then((value) {
+              uId = state.uId;
+              navigateAndFinish(context, const SocialLayout(),);
+              AppCubit.get(context)..getUserData()..getPosts()..getAllUsers();
+            });
           }
         },
         builder: (context , state)

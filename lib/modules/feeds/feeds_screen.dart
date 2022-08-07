@@ -1,5 +1,10 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:social_app/models/post_model.dart';
+import 'package:social_app/shared/cubit/cubit.dart';
+import 'package:social_app/shared/cubit/states.dart';
 import 'package:social_app/shared/styles/colors.dart';
 import 'package:social_app/shared/styles/icon_broken.dart';
 
@@ -8,57 +13,68 @@ class FeedsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      physics: BouncingScrollPhysics(),
-      child: Column(
-        children: [
-          Card(
-            margin: EdgeInsets.all(8),
-            elevation: 5,
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            child: Stack(
-              alignment: AlignmentDirectional.bottomEnd,
+    return BlocConsumer<AppCubit , AppStates>(
+      listener: (context , state) {},
+      builder: (context , state)
+      {
+        return ConditionalBuilder(
+          condition: AppCubit.get(context).posts.isNotEmpty,
+          builder: (context) => SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Column(
               children: [
-                Image(
-                  image: NetworkImage(
-                    'https://c4.wallpaperflare.com/wallpaper/817/296/977/anime-4k-pc-hd-download-wallpaper-preview.jpg',
+                Card(
+                  margin: EdgeInsets.all(8),
+                  elevation: 5,
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  child: Stack(
+                    alignment: AlignmentDirectional.bottomEnd,
+                    children: [
+                      Image(
+                        image: NetworkImage(
+                          'https://c4.wallpaperflare.com/wallpaper/817/296/977/anime-4k-pc-hd-download-wallpaper-preview.jpg',
+                        ),
+                        fit: BoxFit.cover,
+                        height: 200,
+                        width: double.infinity,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          'communicate with friends',
+                          style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  fit: BoxFit.cover,
-                  height: 200,
-                  width: double.infinity,
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'communicate with friends',
-                    style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                      color: Colors.white,
-                    ),
-                  ),
+                ListView.separated(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) => buildFeedItem(AppCubit.get(context).posts[index],context , index),
+                  separatorBuilder: (context, index) => SizedBox(height: 5,),
+                  itemCount: AppCubit.get(context).posts.length,
                 ),
+                const SizedBox(height: 10,),
               ],
             ),
           ),
-          ListView.separated(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) => buildFeedItem(context),
-              separatorBuilder: (context, index) => SizedBox(height: 5,),
-              itemCount: 10,
-          ),
-          SizedBox(height: 10,),
-        ],
-      ),
+          fallback: (context) => const Center(child: CircularProgressIndicator()),
+        );
+      },
     );
   }
 
-  Widget buildFeedItem(context) => Card(
+  Widget buildFeedItem(PostModel model ,context, index) => Card(
     elevation: 5,
-    margin: EdgeInsets.symmetric(horizontal: 8),
+    margin: const EdgeInsets.symmetric(horizontal: 8),
     clipBehavior: Clip.antiAliasWithSaveLayer,
     child: Padding(
       padding: const EdgeInsets.all(10.0),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children:
         [
           Row(
@@ -66,7 +82,7 @@ class FeedsScreen extends StatelessWidget {
               CircleAvatar(
                 radius: 25,
                 backgroundImage: NetworkImage(
-                    'https://images5.alphacoders.com/532/532559.jpg'
+                    '${model.image}'
                 ),
               ),
               const SizedBox(width: 15,),
@@ -78,7 +94,7 @@ class FeedsScreen extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          'Ahmed Fayez',
+                          '${model.name}',
                           style: TextStyle(
                             height: 1.4,
                           ),
@@ -92,7 +108,7 @@ class FeedsScreen extends StatelessWidget {
                       ],
                     ),
                     Text(
-                      'March 1,2022 at 05:00 pm',
+                      '${model.dateTime}',
                       style: Theme.of(context).textTheme.caption!.copyWith(
                         height: 1.4,
                       ),
@@ -119,66 +135,70 @@ class FeedsScreen extends StatelessWidget {
             ),
           ),
           Text(
-            'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book',
+              '${model.text}',
             style: Theme.of(context).textTheme.subtitle1,
           ),
-          Padding(
-            padding: const EdgeInsets.only(
-              top: 5,
-              bottom: 10,
-            ),
+          // Padding(
+          //   padding: const EdgeInsets.only(
+          //     top: 5,
+          //     bottom: 10,
+          //   ),
+          //   child: Container(
+          //     width: double.infinity,
+          //     child: Wrap(
+          //       children: [
+          //         Container(
+          //           padding: EdgeInsetsDirectional.only(
+          //             end: 8,
+          //           ),
+          //           height: 25,
+          //           child: MaterialButton(
+          //             onPressed: (){},
+          //             minWidth: 1,
+          //             padding: EdgeInsets.zero,
+          //             child: Text(
+          //               '#software',
+          //               style: Theme.of(context).textTheme.caption!.copyWith(
+          //                 color: defaultColor,
+          //               ),
+          //             ),
+          //           ),
+          //         ),
+          //         Container(
+          //           padding: EdgeInsetsDirectional.only(
+          //             end: 8,
+          //           ),
+          //           height: 25,
+          //           child: MaterialButton(
+          //             onPressed: (){},
+          //             minWidth: 1,
+          //             padding: EdgeInsets.zero,
+          //             child: Text(
+          //               '#flutter-dev',
+          //               style: Theme.of(context).textTheme.caption!.copyWith(
+          //                 color: defaultColor,
+          //               ),
+          //             ),
+          //           ),
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
+          if(model.postImage != '')
+            Padding(
+            padding: const EdgeInsetsDirectional.only(top: 15),
             child: Container(
+              height: 150,
               width: double.infinity,
-              child: Wrap(
-                children: [
-                  Container(
-                    padding: EdgeInsetsDirectional.only(
-                      end: 8,
-                    ),
-                    height: 25,
-                    child: MaterialButton(
-                      onPressed: (){},
-                      minWidth: 1,
-                      padding: EdgeInsets.zero,
-                      child: Text(
-                        '#software',
-                        style: Theme.of(context).textTheme.caption!.copyWith(
-                          color: defaultColor,
-                        ),
-                      ),
-                    ),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(4),
+                image: DecorationImage(
+                  image: NetworkImage(
+                      '${model.postImage}'
                   ),
-                  Container(
-                    padding: EdgeInsetsDirectional.only(
-                      end: 8,
-                    ),
-                    height: 25,
-                    child: MaterialButton(
-                      onPressed: (){},
-                      minWidth: 1,
-                      padding: EdgeInsets.zero,
-                      child: Text(
-                        '#flutter-dev',
-                        style: Theme.of(context).textTheme.caption!.copyWith(
-                          color: defaultColor,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Container(
-            height: 150,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4),
-              image: DecorationImage(
-                image: NetworkImage(
-                  'https://c4.wallpaperflare.com/wallpaper/817/296/977/anime-4k-pc-hd-download-wallpaper-preview.jpg',
+                  fit: BoxFit.cover,
                 ),
-                fit: BoxFit.cover,
               ),
             ),
           ),
@@ -201,9 +221,9 @@ class FeedsScreen extends StatelessWidget {
                             IconBroken.Heart,
                             color: Colors.red,
                           ),
-                          SizedBox(width: 5,),
+                          const SizedBox(width: 5,),
                           Text(
-                            '1400',
+                            '${AppCubit.get(context).likes[index]}',
                             style: Theme.of(context).textTheme.caption,
                           ),
                         ],
@@ -228,7 +248,7 @@ class FeedsScreen extends StatelessWidget {
                           ),
                           SizedBox(width: 5,),
                           Text(
-                            '140 comment',
+                            '0 comment',
                             style: Theme.of(context).textTheme.caption,
                           ),
                         ],
@@ -259,7 +279,7 @@ class FeedsScreen extends StatelessWidget {
                       CircleAvatar(
                         radius: 18,
                         backgroundImage: NetworkImage(
-                            'https://images5.alphacoders.com/532/532559.jpg'
+                            '${AppCubit.get(context).userModel!.image}',
                         ),
                       ),
                       const SizedBox(width: 15,),
@@ -289,7 +309,10 @@ class FeedsScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                onTap: (){},
+                onTap: ()
+                {
+                  AppCubit.get(context).postLikes(AppCubit.get(context).postsId[index]);
+                },
               ),
             ],
           ),
