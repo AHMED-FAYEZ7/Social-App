@@ -70,4 +70,3 @@ class AppSendMessSuccessState extends AppStates{}
 class AppSendMessErrorState extends AppStates{}
 
 class AppGetMessSuccessState extends AppStates{}
-class AppGetMessErrorState extends AppStates{}
